@@ -71,6 +71,7 @@ const VerticalFieldLayout = ({
 export const FormElement = (props) => {
   const { type, errors, alignLabel } = props;
   return (
+    // eslint-disable-next-line react/destructuring-assignment
     <div className={style.formElementWrapper} data-qa={props['data-qa']}>
       {type === 'horizontal' ? <HorizontalFieldLayout {...props} /> : <VerticalFieldLayout {...props} />}
       <Row className={getErrorsWrapperStyle(alignLabel)} align="middle">
