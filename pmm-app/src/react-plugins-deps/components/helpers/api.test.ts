@@ -4,9 +4,10 @@ import { apiRequestQAN } from './api';
 jest.mock('axios');
 jest.mock('./notification-manager', () => () => ({}));
 
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 xdescribe('GET tests', () => {
   xit('should return data', async () => {
-    axios.get.mockResolvedValue({ data: 'some data' });
+    mockedAxios.get.mockResolvedValue({ data: 'some data' });
     const result = await apiRequestQAN.get('/test/path', { params: { key: 'value' } });
     await expect(result).toEqual('some data');
   });
@@ -14,7 +15,7 @@ xdescribe('GET tests', () => {
 
 describe('POST tests', () => {
   xit('should return data', async () => {
-    axios.post.mockResolvedValue({ data: 'some data' });
+    mockedAxios.post.mockResolvedValue({ data: 'some data' });
     const result = await apiRequestQAN.post('/test/path', { key: 'value' });
     await expect(result).toEqual('some data');
   });
@@ -22,7 +23,7 @@ describe('POST tests', () => {
 
 describe('PATCH tests', () => {
   xit('should return data', async () => {
-    axios.patch.mockResolvedValue({ data: 'some data' });
+    mockedAxios.patch.mockResolvedValue({ data: 'some data' });
     const result = await apiRequestQAN.patch('/test/path', { key: 'value' });
     await expect(result).toEqual('some data');
   });
@@ -30,7 +31,7 @@ describe('PATCH tests', () => {
 
 describe('DELETE tests', () => {
   xit('should return data', async () => {
-    axios.delete.mockResolvedValue({ data: 'some data' });
+    mockedAxios.delete.mockResolvedValue({ data: 'some data' });
     const result = await apiRequestQAN.delete('/test/path');
     await expect(result).toEqual('some data');
   });
