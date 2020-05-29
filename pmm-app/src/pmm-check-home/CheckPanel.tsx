@@ -19,31 +19,19 @@ export interface CheckPanelState {
 const history = createBrowserHistory();
 
 export class CheckPanel extends PureComponent<CheckPanelProps, CheckPanelState> {
-  state: CheckPanelState = {
-    failedChecks: undefined,
-    isSttEnabled: false,
-    isLoading: true,
-  };
-
   constructor(props: CheckPanelProps) {
     super(props);
     this.fetchAlerts = this.fetchAlerts.bind(this);
     this.getSettings = this.getSettings.bind(this);
+    this.state = {
+      failedChecks: undefined,
+      isSttEnabled: false,
+      isLoading: true,
+    };
   }
 
   componentDidMount() {
     this.getSettings();
-  }
-
-  async fetchAlerts() {
-    try {
-      const failedChecks = await CheckService.getFailedChecks();
-      this.setState({ failedChecks });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      this.setState({ isLoading: false });
-    }
   }
 
   async getSettings() {
@@ -58,6 +46,17 @@ export class CheckPanel extends PureComponent<CheckPanelProps, CheckPanelState> 
     } catch (err) {
       this.setState({ isLoading: false });
       console.error(err);
+    }
+  }
+
+  async fetchAlerts() {
+    try {
+      const failedChecks = await CheckService.getFailedChecks();
+      this.setState({ failedChecks });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
 

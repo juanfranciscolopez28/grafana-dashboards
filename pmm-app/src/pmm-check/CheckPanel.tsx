@@ -20,31 +20,19 @@ export interface CheckPanelState {
 const history = createBrowserHistory();
 
 export class CheckPanel extends PureComponent<CheckPanelProps, CheckPanelState> {
-  state = {
-    dataSource: undefined,
-    isLoading: true,
-    isSttEnabled: false,
-  };
-
   constructor(props: CheckPanelProps) {
     super(props);
     this.fetchAlerts = this.fetchAlerts.bind(this);
     this.getSettings = this.getSettings.bind(this);
+    this.state = {
+      dataSource: undefined,
+      isLoading: true,
+      isSttEnabled: false,
+    };
   }
 
   componentDidMount() {
     this.getSettings();
-  }
-
-  async fetchAlerts() {
-    try {
-      const dataSource = await CheckService.getActiveAlerts();
-      this.setState({ dataSource });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      this.setState({ isLoading: false });
-    }
   }
 
   async getSettings() {
@@ -58,6 +46,17 @@ export class CheckPanel extends PureComponent<CheckPanelProps, CheckPanelState> 
       }
     } catch (err) {
       console.error(err);
+      this.setState({ isLoading: false });
+    }
+  }
+
+  async fetchAlerts() {
+    try {
+      const dataSource = await CheckService.getActiveAlerts();
+      this.setState({ dataSource });
+    } catch (err) {
+      console.error(err);
+    } finally {
       this.setState({ isLoading: false });
     }
   }
